@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --watch practica-node1",
-    "dev": "node --watch server-express.js",
+    "dev": "node --watch ejercrud1.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

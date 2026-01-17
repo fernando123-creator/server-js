@@ -40,6 +40,38 @@ app.get('/users/:id', (req, res) => {
     res.status(200).json(buscarID);
 });
 
+app.post('/users', (req, res) => {
+    const { nombre, email } = req.body;
+    const users = JSON.parse(readData)
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nombre || !email) {
+        return res.status(400).json({message: 'los campos nombre y email son obligatorios'});
+    };
+    
+    if (!regex.test(email)) {
+        return res.status(400).json({message: 'email no valido'})
+    }
+
+    const newUser = {
+        id: users.length + 1,
+        nombre,
+        email
+    }
+
+    users.push(newUser);
+
+    
+    try {
+        fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
+    } catch (error) {
+        return res.status(500).json({message: 'error al guaradar el archivo'});
+    }
+
+    res.status(201).json({message: 'usuario guardado con exito', user: newUser});
+});
+
+
 
 app.listen(PORT, ()=>{
     console.log('servidor corriendo...');
